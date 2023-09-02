@@ -27,7 +27,6 @@ def main(argv=sys.argv):
     target_image = Image.open(target_file_path)
 
     scrambles = load_scramble_numbers(target_file_path)
-    logging.debug("scrambles = {}".format(scrambles))
 
     tile_v_len = target_image.height // TILE_SIZE
     tile_h_len = TILE_HORIZONTAL_LENGTH
@@ -69,13 +68,13 @@ def unscramble_image(target_image, image_tiles, scrambles, tile_h_len, tile_v_le
 
 def load_scramble_numbers(target_image_file_path):
     image_file_name = os.path.basename(target_image_file_path)
-    logging.debug("image_file_name = {}".format(image_file_name))
     xml_file_name = re.sub("_.*.bin", ".xml", image_file_name)
     xml_file_path = os.path.join(os.path.dirname(target_image_file_path), xml_file_name)
-    logging.debug("xml_file_path = {}".format(xml_file_path))
+
     xml_tree = ET.parse(xml_file_path)
     scramble_csv = xml_tree.getroot().find("./Scramble").text
-    logging.debug("scramble_csv = {}".format(scramble_csv))
-    return [int(n) for n in scramble_csv.split(',')]
+
+    return [int(n) for n in scramble_csv.split(",")]
+
 
 main()
