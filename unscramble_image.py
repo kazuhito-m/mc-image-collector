@@ -29,22 +29,12 @@ for y in range(TILE_SIZE):
         image_tile = base_image.crop((left, top, right, bottom))
         image_tiles.append(image_tile)
 
-# for i, image_tile in enumerate(image_tiles):
-#     tile_file_name = str(i) + ".bmp"
-#     image_tile.save(tile_file_name)
-
 for i, scramble_pos in enumerate(scrambles):
     x = i % TILE_SIZE
     y = i // TILE_SIZE
 
-    # logging.debug('x = {}'.format(x))
-    # logging.debug('y = {}'.format(y))
-
     left = tile_h_len * x
     top = tile_v_len * y
-
-    # logging.debug('left = {}'.format(left))
-    # logging.debug('top = {}'.format(top))
 
     hit_image_tile = image_tiles[scramble_pos]
     unscramble_image.paste(hit_image_tile, (left, top))
