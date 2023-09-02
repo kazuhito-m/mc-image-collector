@@ -46,7 +46,7 @@ for i, scramble_pos in enumerate(scrambles):
     # logging.debug('left = {}'.format(left))
     # logging.debug('top = {}'.format(top))
 
-    hit_image_tile = image_tiles[0]
+    hit_image_tile = image_tiles[scramble_pos]
     unscramble_image.paste(hit_image_tile, (left, top))
 
 unscramble_image.save("result.bmp")
