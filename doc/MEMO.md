@@ -8,3 +8,8 @@
 - 左上->右下に向け、0-15の番号をつける
 - xmlの<Scramble>タグにあるCSVにしたがって、左上からタイルの番号通りに並べていく
 
+## 参考
+
+- 画像ライブラリ:Pillow
+  - https://camp.trainocate.co.jp/magazine/python-pillow/
+  - https://imagingsolution.net/program/python/pillow/pillow_image_crop/
