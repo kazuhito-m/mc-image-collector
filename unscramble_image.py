@@ -5,10 +5,15 @@ from PIL import Image, ImageFilter
 
 TILE_SIZE = 4
 
-img = Image.open("./results/0000_0000.bin")
+target_file = "./results/0000_0000.bin"
+
+base_image = Image.open(target_file)
+unscramble_image = Image.open(target_file)
 
 tile_v_len = 176
-tile_h_len = img.height / TILE_SIZE
+tile_h_len = base_image.height / TILE_SIZE
+
+image_tiles = [[],[],[],[]]
 
 for i in range(TILE_SIZE):
     for j in range(TILE_SIZE):
@@ -17,8 +22,8 @@ for i in range(TILE_SIZE):
         right = tile_v_len * (i + 1)
         bottom = tile_h_len * (j + 1)
 
-        img_roi = img.crop((left, top, right, bottom))
+        image_tile = base_image.crop((left, top, right, bottom))
+        image_tiles[i].append(image_tile)
 
         file_name = str(i) + "_" + str(j) + ".bmp"
-        img_roi.save(file_name)
-
+        image_tiles[i][j].save(file_name)
