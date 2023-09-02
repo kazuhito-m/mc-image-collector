@@ -35,7 +35,8 @@ def main(argv=sys.argv):
 
     unscramble_image(target_image, image_tiles, scrambles, tile_h_len, tile_v_len)
 
-    target_image.save("result.png")
+    result_image_path = make_png_file_name(target_file_path)
+    target_image.save(result_image_path)
 
 
 def capture_image_tiles(base_image, tile_h_len, tile_v_len):
@@ -75,6 +76,12 @@ def load_scramble_numbers(target_image_file_path):
     scramble_csv = xml_tree.getroot().find("./Scramble").text
 
     return [int(n) for n in scramble_csv.split(",")]
+
+
+def make_png_file_name(original_image_file_path):
+    image_file_name = os.path.basename(original_image_file_path)
+    png_file_name = re.sub("_.*.bin", ".png", image_file_name)
+    return os.path.join(os.path.dirname(original_image_file_path), png_file_name)
 
 
 main()
