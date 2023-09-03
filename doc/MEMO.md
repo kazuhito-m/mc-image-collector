@@ -13,3 +13,8 @@
 - 画像ライブラリ:Pillow
   - https://camp.trainocate.co.jp/magazine/python-pillow/
   - https://imagingsolution.net/program/python/pillow/pillow_image_crop/
+- Python基本形
+  - https://note.nkmk.me/python-os-basename-dirname-split-splitext/
+  - https://note.nkmk.me/python-str-replace-translate-re-sub/
+  - https://www.javadrive.jp/python/file/index2.html
+  - https://docs.python.org/ja/3/library/xml.etree.elementtree.html
