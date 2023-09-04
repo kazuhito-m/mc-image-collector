@@ -28,7 +28,7 @@ rm -rf ${RESULT_DIR}
 rm -rf ${WORK_DIR}
 mkdir ${WORK_DIR}
 
-grep "\"url" ${har_file} | grep "m_hai.php?file=0" | sed 's/^.*url": "//g' | sed 's/",$//g' >${WORK_DIR}/urls.txt
+grep "\"url" ${har_file} | grep "m_hai.php?file=0" | sed 's/^.*url": "//g' | sed 's/",$//g' | sort | uniq >${WORK_DIR}/urls.txt
 
 cd ${WORK_DIR}
 
