@@ -9,9 +9,6 @@ import logging
 import xml.etree.ElementTree as ET
 from PIL import Image
 
-TILE_COUNT_ON_SIDE = 4
-TILE_MIN_SIZE = 32
-
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 
 
@@ -36,9 +33,7 @@ def main(argv=sys.argv):
         merge_width = 0
         merge_height = 0
 
-        image_count = x * y
-
-        images = load_devided_images(xml_file_path, image_count)
+        images = load_devided_images(xml_file_path, x * y)
         for i, image in enumerate(images):
             if i < x:
                 merge_width += image.width
