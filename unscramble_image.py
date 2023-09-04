@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 from PIL import Image
 
 TILE_COUNT_ON_SIDE = 4
-TILE_HORIZONTAL_LENGTH = 176
+TILE_MIN_SIZE = 32
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 
@@ -25,8 +25,8 @@ def main(argv=sys.argv):
 
     scrambles = load_scramble_numbers(target_file_path)
 
-    tile_v_len = target_image.height // TILE_COUNT_ON_SIDE
-    tile_h_len = TILE_HORIZONTAL_LENGTH
+    tile_v_len = one_logical_tile_size(target_image.height)
+    tile_h_len = one_logical_tile_size(target_image.width)
 
     image_tiles = capture_image_tiles(target_image, tile_h_len, tile_v_len)
 
@@ -81,6 +81,14 @@ def make_png_file_name(original_image_file_path):
     image_file_name = os.path.basename(original_image_file_path)
     png_file_name = re.sub("\.bin", ".png", image_file_name)
     return os.path.join(os.path.dirname(original_image_file_path), png_file_name)
+
+
+def cut_logical_tile_area(size):
+    return size - (size % TILE_MIN_SIZE)
+
+
+def one_logical_tile_size(size):
+    return cut_logical_tile_area(size) // TILE_COUNT_ON_SIDE
 
 
 sys.exit(main())
