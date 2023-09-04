@@ -4,6 +4,7 @@ set -eu
 
 THIS_SCRIPT_DIR=$(cd $(dirname $(readlink $0 || echo $0)); pwd -P)
 UNSCRAMBLE_SCRIPT_PATH=${THIS_SCRIPT_DIR}/unscramble_image.py
+MERGE_IMAGE_SCRIPT_PATH=${THIS_SCRIPT_DIR}/merge_sprlit_images.py
 
 WORK_DIR=./work
 RESULT_DIR=./results
@@ -42,6 +43,8 @@ for image_file_path in $(ls *.bin); do
   echo "${image_file_path} ファイルを変換中..."
   ${UNSCRAMBLE_SCRIPT_PATH} ${image_file_path}
 done
+
+${MERGE_IMAGE_SCRIPT_PATH} .
 
 cd ..
 mkdir ${RESULT_DIR}
