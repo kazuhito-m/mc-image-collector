@@ -79,7 +79,7 @@ def load_scramble_numbers(target_image_file_path):
 
 def make_png_file_name(original_image_file_path):
     image_file_name = os.path.basename(original_image_file_path)
-    png_file_name = re.sub("_.*.bin", ".png", image_file_name)
+    png_file_name = re.sub("\.bin", ".png", image_file_name)
     return os.path.join(os.path.dirname(original_image_file_path), png_file_name)
 
 
