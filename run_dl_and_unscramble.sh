@@ -38,7 +38,6 @@ for i in $(cat ./urls.txt); do
   curl --output ${file_name} ${i}
 done
 
-unscramble_script_path=${THIS_SCRIPT_DIR}/unscramble_image.py
 for image_file_path in $(ls *.bin); do
   echo "${image_file_path} ファイルを変換中..."
   ${UNSCRAMBLE_SCRIPT_PATH} ${image_file_path}
