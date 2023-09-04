@@ -14,9 +14,9 @@ fi
 har_file=${1}
 
 if [ -f ${har_file} ]; then
-  ehco "ファイルの存在を確認: ${har_file}"
+  echo "ファイルの存在を確認: ${har_file}"
 else
-  ehco "指定されたファイルが存在しません。 ${har_file}"
+  echo "指定されたファイルが存在しません。 ${har_file}"
   exit 1
 fi
 
