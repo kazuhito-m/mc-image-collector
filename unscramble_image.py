@@ -8,7 +8,7 @@ import logging
 import xml.etree.ElementTree as ET
 from PIL import Image
 
-TILE_SIZE = 4
+TILE_COUNT_ON_SIDE = 4
 TILE_HORIZONTAL_LENGTH = 176
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
@@ -25,7 +25,7 @@ def main(argv=sys.argv):
 
     scrambles = load_scramble_numbers(target_file_path)
 
-    tile_v_len = target_image.height // TILE_SIZE
+    tile_v_len = target_image.height // TILE_COUNT_ON_SIDE
     tile_h_len = TILE_HORIZONTAL_LENGTH
 
     image_tiles = capture_image_tiles(target_image, tile_h_len, tile_v_len)
@@ -41,8 +41,8 @@ def main(argv=sys.argv):
 def capture_image_tiles(base_image, tile_h_len, tile_v_len):
     image_tiles = []
 
-    for y in range(TILE_SIZE):
-        for x in range(TILE_SIZE):
+    for y in range(TILE_COUNT_ON_SIDE):
+        for x in range(TILE_COUNT_ON_SIDE):
             left = tile_h_len * x
             top = tile_v_len * y
             right = tile_h_len * (x + 1)
@@ -56,8 +56,8 @@ def capture_image_tiles(base_image, tile_h_len, tile_v_len):
 
 def unscramble_image(target_image, image_tiles, scrambles, tile_h_len, tile_v_len):
     for i, scramble_pos in enumerate(scrambles):
-        x = i % TILE_SIZE
-        y = i // TILE_SIZE
+        x = i % TILE_COUNT_ON_SIDE
+        y = i // TILE_COUNT_ON_SIDE
 
         left = tile_h_len * x
         top = tile_v_len * y
