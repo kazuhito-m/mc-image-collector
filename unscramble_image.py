@@ -7,22 +7,19 @@ import re
 import logging
 import xml.etree.ElementTree as ET
 from PIL import Image
-from argparse import ArgumentParser
 
 TILE_SIZE = 4
 TILE_HORIZONTAL_LENGTH = 176
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 
-parser = ArgumentParser(
-    prog="unscramble_image", description="とある軽度な暗号化がされている画像を定義ファイルを元に復元する。"
-)
-
 
 def main(argv=sys.argv):
-    args = parser.parse_args()
+    if len(argv) == 1:
+        print("第一引数には、対象となる画像ファイルのPath(*.bin)を指定して下さい。")
+        return 1
 
-    target_file_path = "./results/0004_0000.bin"
+    target_file_path = argv[1]
 
     target_image = Image.open(target_file_path)
 
@@ -37,6 +34,8 @@ def main(argv=sys.argv):
 
     result_image_path = make_png_file_name(target_file_path)
     target_image.save(result_image_path)
+
+    return 0
 
 
 def capture_image_tiles(base_image, tile_h_len, tile_v_len):
@@ -84,4 +83,4 @@ def make_png_file_name(original_image_file_path):
     return os.path.join(os.path.dirname(original_image_file_path), png_file_name)
 
 
-main()
+sys.exit(main())
