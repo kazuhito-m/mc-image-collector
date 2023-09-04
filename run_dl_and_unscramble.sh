@@ -1,6 +1,8 @@
 #!/bin/bash
 
-THIS_SCRIPT_DIR=$(cd $(dirname $(readlink $0 || echo $0));pwd -P)
+set -eu
+
+THIS_SCRIPT_DIR=$(cd $(dirname $(readlink $0 || echo $0)); pwd -P)
 UNSCRAMBLE_SCRIPT_PATH=${THIS_SCRIPT_DIR}/unscramble_image.py
 
 WORK_DIR=./work
@@ -26,7 +28,7 @@ rm -rf ${RESULT_DIR}
 rm -rf ${WORK_DIR}
 mkdir ${WORK_DIR}
 
-grep "\"url" ${har_file} | grep "m_hai.php?file=0" | sed 's/^.*url": "//g' | sed 's/",$//g' > ${WORK_DIR}/urls.txt
+grep "\"url" ${har_file} | grep "m_hai.php?file=0" | sed 's/^.*url": "//g' | sed 's/",$//g' >${WORK_DIR}/urls.txt
 
 cd ${WORK_DIR}
 
@@ -37,7 +39,7 @@ for i in $(cat ./urls.txt); do
 done
 
 unscramble_script_path=${THIS_SCRIPT_DIR}/unscramble_image.py
-for image_file_path in $(ls *.bin); do 
+for image_file_path in $(ls *.bin); do
   echo "${image_file_path} ファイルを変換中..."
   ${UNSCRAMBLE_SCRIPT_PATH} ${image_file_path}
 done
