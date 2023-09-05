@@ -11,19 +11,15 @@ async function main() {
     }
     const dataJsFilePath = process.argv[2];
     const workDirPath = path.dirname(dataJsFilePath);
-    const geval = eval; // FIXME おまじないすぎる…なぜ動くか知った上で使いたい。 https://stackoverflow.com/questions/52160557/fail-to-create-variable-using-eval-in-node-js-es6
 
-    const imageDifinitionJs = fs.readFileSync(dataJsFilePath, 'utf8');
-    geval(imageDifinitionJs);
-    const pages = portal_pages;
+    const pages = loadPagesSpecificationByJsFile(dataJsFilePath);
 
     // ファイルをすべて一度ダウンロード
     for (const key in pages) {
-        const page = portal_pages[key];
+        const page = pages[key];
 
         const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number))
         await httpsDownload(page.url, dlPath);
-
     }
 
     const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
@@ -49,10 +45,19 @@ async function main() {
             blend: 'over'
         };
         pasteImages.push(pasteStatus);
-    }    
+    }
 
     fixImage.composite(pasteImages);
     fixImage.toFile('./work/cut_test.jpg');
+}
+
+function loadPagesSpecificationByJsFile(jsFilePath) {
+    const imageDifinitionJs = fs.readFileSync(jsFilePath, 'utf8');
+
+    const geval = eval; // FIXME おまじないすぎる…なぜ動くか知った上で使いたい。 https://stackoverflow.com/questions/52160557/fail-to-create-variable-using-eval-in-node-js-es6
+    geval(imageDifinitionJs);
+
+    return portal_pages;
 }
 
 function scrambledFileNameOf(num) {
