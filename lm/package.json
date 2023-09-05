@@ -4,9 +4,10 @@
   "author": "kazuhito_m",
   "license": "ISC",
   "scripts": {
-    "all": "node ./collect-images.mjs" 
+    "all": "node ./collect-images.mjs"
   },
   "dependencies": {
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "sharp": "^0.32.5"
   }
 }
