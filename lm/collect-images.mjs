@@ -17,23 +17,24 @@ async function main() {
     await downloadAllScrambledImages(pages, workDirPath);
 
 
-    // TODO 試しに一つだけ
+    // TODO Debug;試しに一つだけ、ファイルは決め打ち。
+    const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
     const page = pages['0'];
 
-    const tileAriaRight = page.iw - (page.iw % page.bwd);
-    const tileAriaBottom = page.ih - (page.ih % page.bwd);
+    const meta = page.metadata;
 
-    const tileWidth = tileAriaRight / page.hc;
-    const tileHeight = tileAriaBottom / page.vc;
+    const tileAriaRight = meta.iw - (meta.iw % meta.bwd);
+    const tileAriaBottom = meta.ih - (meta.ih % meta.bwd);
 
-    // TODO DEBUG,ファイルは決め打ち。
-    const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
+    const tileWidth = tileAriaRight / meta.hc;
+    const tileHeight = tileAriaBottom / meta.vc;
+
     const image = sharp(imagePath);
 
     const tileImages = [];
-    for (let y = 0; y < page.vc; y++) {
+    for (let y = 0; y < meta.vc; y++) {
         const top = tileHeight * y;
-        for (let x = 0; x < page.hc; x++) {
+        for (let x = 0; x < meta.hc; x++) {
             const left = tileWidth * x;
             const tileImage = image.clone()
                 .extract({
@@ -47,34 +48,27 @@ async function main() {
         }
     }
 
-    const scrambledPositions = page.metadata.m
+    const scrambledPositions = meta.m
         .map(numOf35Base => numOf35ToDecimal(numOf35Base))
-    // for (let i = 0; i < scrambledPositions.length; i++) {
-    //     const pos = scrambledPositions[i];
-    //     console.log(i + "\t" + pos);
-    // }
-    for (let i = 0; i < page.metadata.m.length; i++) {
-        const text = page.metadata.m[i];
-        const decimal = numOf35ToDecimal(text);
-        console.log(i + "\t" + text + "\t" + decimal);
+
+    const pasteImages = [];
+    for (let i = 0; i < scrambledPositions.length; i++) {
+        const pos = scrambledPositions[i];
+
+        const col = i % meta.hc;
+        const row = i / meta.hc | 0;
+
+        const pasteStatus = {
+            input: tileImages[pos],
+            top: col * tileWidth,
+            left: row * tileHeight,
+            blend: 'over'
+        };
+        pasteImages.push(pasteStatus);
     }
-    // let fixImage = image.clone();
 
-    // const cutImageBinary = await cutImage.toBuffer();
-
-    // const pasteImages = [];
-    // for (let i = 0; i < 30; i++) {
-    //     const pasteStatus = {
-    //         input: cutImageBinary,
-    //         top: i * 25,
-    //         left: i * 25,
-    //         blend: 'over'
-    //     };
-    //     pasteImages.push(pasteStatus);
-    // }
-
-    // fixImage.composite(pasteImages);
-    // fixImage.toFile('./work/cut_test.jpg');
+    image.composite(pasteImages);
+    image.toFile('./work/cut_test.jpg');
 }
 
 function loadPagesSpecificationByJsFile(jsFilePath) {
