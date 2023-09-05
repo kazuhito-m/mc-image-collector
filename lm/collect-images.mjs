@@ -14,13 +14,7 @@ async function main() {
 
     const pages = loadPagesSpecificationByJsFile(dataJsFilePath);
 
-    // ファイルをすべて一度ダウンロード
-    for (const key in pages) {
-        const page = pages[key];
-
-        const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number))
-        await httpsDownload(page.url, dlPath);
-    }
+    await downloadAllScrambledImages(pages, workDirPath);
 
     const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
 
@@ -58,6 +52,13 @@ function loadPagesSpecificationByJsFile(jsFilePath) {
     geval(imageDifinitionJs);
 
     return portal_pages;
+}
+
+async function downloadAllScrambledImages(pages, workDirPath) {
+    for (const page of Object.values(pages)) {
+        const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
+        await httpsDownload(page.url, dlPath);
+    }
 }
 
 function scrambledFileNameOf(num) {
