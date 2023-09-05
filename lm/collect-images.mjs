@@ -26,20 +26,60 @@ async function main() {
 
     }
 
-    // const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
-    const imagePath = '/home/kazuhito/Downloads/yamane.jpg';
+    const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
 
     const image = sharp(imagePath);
     let fixImage = image.clone();
 
     const cutImage = image.clone()
         .extract({
-            top: 0,
-            left: 0,
+            top: 1000,
+            left: 700,
             width: 50,
             height: 50
         });
     const cutImageBinary = await cutImage.toBuffer();
+
+    fixImage.composite([
+        {
+            input: cutImageBinary,
+            top: 50,
+            left: 50,
+            blend: 'over'
+        },
+        {
+            input: cutImageBinary,
+            top: 75,
+            left: 75,
+            blend: 'over'
+        },
+        {
+            input: cutImageBinary,
+            top: 125,
+            left: 125,
+            blend: 'over'
+        }
+    ])
+
+    // const cutImage2 = image.clone()
+    //     .extract({
+    //         top: 200,
+    //         left: 200,
+    //         width: 50,
+    //         height: 50
+    //     });
+    // const cutImageBinary2 = await cutImage2.toBuffer();
+
+    // const fixImage2 = fixImage.clone();
+
+    // fixImage2.composite([{
+    //     input: cutImageBinary2,
+    //     top: 100,
+    //     left: 100,
+    //     blend: 'over'
+    // }])
+
+
 
     for (let i = 0; i < 40; i++) {
         // const cutImage = image.clone()
@@ -51,12 +91,12 @@ async function main() {
         //     });
         // const cutImageBinary = await cutImage.toBuffer();
 
-        fixImage.composite([{
-            input: cutImageBinary,
-            top: i * 20,
-            left: i * 20,
-            blend: 'over'
-        }])
+        // fixImage.composite([{
+        //     input: cutImageBinary,
+        //     top: i * 20,
+        //     left: i * 20,
+        //     blend: 'over'
+        // }])
 
     }
 
