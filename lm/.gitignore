@@ -1,0 +1,7 @@
+/node_modules
+/results
+/work
+/samples
+/.vscode
+*.html
+package-lock.json

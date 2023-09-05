@@ -1,0 +1,12 @@
+{
+  "name": "lm-image-collector",
+  "version": "1.0.0",
+  "author": "kazuhito_m",
+  "license": "ISC",
+  "scripts": {
+    "all": "node ./collect-images.mjs" 
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}
