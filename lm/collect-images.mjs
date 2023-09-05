@@ -22,7 +22,7 @@ async function main() {
         const page = portal_pages[key];
 
         const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number))
-        await httpsDownload3(page.url, dlPath);
+        await httpsDownload(page.url, dlPath);
 
     }
 
@@ -74,40 +74,7 @@ function zp(value, length) {
     return ('0'.repeat(length) + value).slice(-length);
 }
 
-function httpDownload2(url, localPath, cb) {
-    var stream = fs.createWriteStream(localPath);
-    https.get(url, (response) => {
-        response.pipe(stream);
-        stream.on('finish', () => {
-            console.log('closeに来た時。');
-            stream.close(cb);
-        });
-    });
-    console.log('Endの下に来た時。')
-}
-
-function httpDownload(url, localPath) {
-    const stream = fs.createWriteStream(localPath);
-    const req = https.get(url, res => {
-        res.pipe(stream);
-        res.on('finish', () => {
-            stream.close();
-            console.log('closeに来た時。');
-        });
-    });
-    req.on('error', (e) => {
-        console.error(`ファイルのHTTPダウンロードに失敗しました。: ${e.message}`);
-    });
-    req.end();
-
-    console.log('Endの下に来た時。')
-
-    // if (!fs.existsSync(localPath) || fs.lstatSync(localPath).size === 0)
-    //     throw new Error('ファイルのHTTPダウンロードが失敗しました。サイズ0。');
-}
-
-
-async function httpsDownload3(url, localPath) {
+async function httpsDownload(url, localPath) {
     return new Promise((resolve, reject) => {
         https.get(url, (response) => {
             response.on('data', (chunk) => {
