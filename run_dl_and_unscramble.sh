@@ -9,6 +9,8 @@ MERGE_IMAGE_SCRIPT_PATH=${THIS_SCRIPT_DIR}/merge_sprlit_images.py
 WORK_DIR=./work
 RESULT_DIR=./results
 
+# --- check preconditions ---
+
 if [ $# != 1 ]; then
   echo "引数には「Chromeの通信履歴のファイル(*.har)」のPathを指定して下さい。"
   exit 1
