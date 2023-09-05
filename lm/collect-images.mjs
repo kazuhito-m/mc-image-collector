@@ -40,69 +40,19 @@ async function main() {
         });
     const cutImageBinary = await cutImage.toBuffer();
 
-    fixImage.composite([
-        {
+    const pasteImages = [];
+    for (let i = 0; i < 30; i++) {
+        const pasteStatus = {
             input: cutImageBinary,
-            top: 50,
-            left: 50,
+            top: i * 25,
+            left: i * 25,
             blend: 'over'
-        },
-        {
-            input: cutImageBinary,
-            top: 75,
-            left: 75,
-            blend: 'over'
-        },
-        {
-            input: cutImageBinary,
-            top: 125,
-            left: 125,
-            blend: 'over'
-        }
-    ])
+        };
+        pasteImages.push(pasteStatus);
+    }    
 
-    // const cutImage2 = image.clone()
-    //     .extract({
-    //         top: 200,
-    //         left: 200,
-    //         width: 50,
-    //         height: 50
-    //     });
-    // const cutImageBinary2 = await cutImage2.toBuffer();
-
-    // const fixImage2 = fixImage.clone();
-
-    // fixImage2.composite([{
-    //     input: cutImageBinary2,
-    //     top: 100,
-    //     left: 100,
-    //     blend: 'over'
-    // }])
-
-
-
-    for (let i = 0; i < 40; i++) {
-        // const cutImage = image.clone()
-        //     .extract({
-        //         top: 100,
-        //         left: 100,
-        //         width: 20,
-        //         height: 20
-        //     });
-        // const cutImageBinary = await cutImage.toBuffer();
-
-        // fixImage.composite([{
-        //     input: cutImageBinary,
-        //     top: i * 20,
-        //     left: i * 20,
-        //     blend: 'over'
-        // }])
-
-    }
-
+    fixImage.composite(pasteImages);
     fixImage.toFile('./work/cut_test.jpg');
-
-
 }
 
 function scrambledFileNameOf(num) {
