@@ -43,10 +43,10 @@ done
 
 for image_file_path in $(ls *.bin); do
   echo "${image_file_path} ファイルを変換中..."
-  ${UNSCRAMBLE_SCRIPT_PATH} ${image_file_path}
+  python ${UNSCRAMBLE_SCRIPT_PATH} ${image_file_path}
 done
 
-${MERGE_IMAGE_SCRIPT_PATH} .
+python ${MERGE_IMAGE_SCRIPT_PATH} .
 
 cd ..
 mkdir ${RESULT_DIR}
