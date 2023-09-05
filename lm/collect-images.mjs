@@ -24,7 +24,7 @@ async function main() {
     const tileAriaBottom = page.ih - (page.ih % page.bwd);
 
     const tileWidth = tileAriaRight / page.hc;
-    const tileHeight = tileAriaRight / page.vc;
+    const tileHeight = tileAriaBottom / page.vc;
 
     // TODO DEBUG,ファイルは決め打ち。
     const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
@@ -39,8 +39,8 @@ async function main() {
                 .extract({
                     top: top,
                     left: left,
-                    width: 50,
-                    height: 50
+                    width: tileWidth,
+                    height: tileHeight
                 });
             const tileBuffer = await tileImage.toBuffer();
             tileImages.push(tileBuffer);
