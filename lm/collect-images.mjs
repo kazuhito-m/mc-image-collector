@@ -19,9 +19,7 @@ async function main() {
     for (const page of Object.values(pages)) {
         await unsubscribeImageFile(page, workDirPath);
     }
-
-    afterWork(pages, workDirPath);
-}
+    }
 
 async function unsubscribeImageFile(page, workDirPath) {
     const meta = page.metadata;
@@ -90,16 +88,6 @@ async function downloadAllScrambledImages(pages, workDirPath) {
         const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
         await httpsDownload(page.url, dlPath);
     }
-}
-
-function afterWork(pages, workDirPath) {
-    const removeWorkFiles = () => {
-        for (const page of Object.values(pages)) {
-            const scrambledImagePath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
-            fs.rmSync(scrambledImagePath);
-        }
-    }
-    setTimeout(removeWorkFiles, 250);  // FIXME どうしてもタイミングの問題で先にスクランブル画像を削除てしまうので、Sleep。直したい。
 }
 
 function scrambledFileNameOf(num) {
