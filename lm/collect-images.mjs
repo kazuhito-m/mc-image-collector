@@ -19,7 +19,7 @@ async function main() {
     for (const page of Object.values(pages)) {
         await unsubscribeImageFile(page, workDirPath);
     }
-    }
+}
 
 async function unsubscribeImageFile(page, workDirPath) {
     const meta = page.metadata;
