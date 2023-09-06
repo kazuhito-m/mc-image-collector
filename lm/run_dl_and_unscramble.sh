@@ -44,6 +44,7 @@ cat ${html_file} \
 
 npm run all ${WORK_DIR}/${SCRAMBLE_IMAGE_DATA_PATH}
 
+mkdir -p ${RESULT_DIR}
 mv ${WORK_DIR}/????.jpg ${RESULT_DIR} 
 rm -rf ${WORK_DIR}
 
