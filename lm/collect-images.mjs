@@ -33,7 +33,7 @@ async function unsubscribeImageFile(page, workDirPath) {
     const tileHeight = tileAriaBottom / meta.vc;
 
     const scrambledImagePath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
-    const image = sharp(scrambledImagePath);
+    const image = await sharp(scrambledImagePath);
 
     const tileImages = [];
     for (let row = 0; row < meta.vc; row++) {
@@ -73,8 +73,7 @@ async function unsubscribeImageFile(page, workDirPath) {
 
     image.composite(pasteImages);
 
-    const unscrambledImagePath = path.join(workDirPath, zp(page.page_number, 4) + '.jpg');
-    image.toFile(unscrambledImagePath);
+    image.toFile(unscrambledImagePathOf(page, workDirPath));
 }
 
 function loadPagesSpecificationByJsFile(jsFilePath) {
@@ -94,16 +93,22 @@ async function downloadAllScrambledImages(pages, workDirPath) {
 }
 
 function afterWork(pages, workDirPath) {
-    console.log('最後まですっと来てしまったりするの？');
-    for (const page of Object.values(pages)) {
-        const scrambledImagePath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
-        fs.rmSync(scrambledImagePath);
+    const removeWorkFiles = () => {
+        for (const page of Object.values(pages)) {
+            const scrambledImagePath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
+            fs.rmSync(scrambledImagePath);
+        }
     }
+    setTimeout(removeWorkFiles, 250);  // FIXME どうしてもタイミングの問題で先にスクランブル画像を削除てしまうので、Sleep。直したい。
 }
 
 function scrambledFileNameOf(num) {
     const zpNum = zp(num, 4);
     return `scrambled_${zpNum}.jpg`;
+}
+
+function unscrambledImagePathOf(page, workDirPath) {
+    return path.join(workDirPath, zp(page.page_number, 4) + '.jpg');
 }
 
 function zp(value, length) {
