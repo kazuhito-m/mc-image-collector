@@ -18,5 +18,5 @@
 1. `Chrome` で当該サイトのビューアを閲覧(一区切り分だけ)
 2. `Chrome` の開発者ツール(DevTools)「ネットワーク」の機能から「通信履歴ファイル(*.harファイル)」を取得
 3. コンソールを開き、このリポジトリ直下からスクリプトを実行
-    - `run_dl_and_unscramble.sh xxx.har`
+    - `./run_dl_and_unscramble.sh xxx.har`
 4. *.harファイルの名前と同じフォルダが作成され、そこに画像が溜まる(上記例では `./xxx` フォルダ)
