@@ -10,7 +10,7 @@ async function main() {
         return;
     }
     const dataJsFilePath = process.argv[2];
-    const workDirPath = dataJsFilePath.substring(0, dataJsFilePath.length - path.basename(dataJsFilePath).length);
+    const workDirPath = path.dirname(dataJsFilePath);
 
     const pages = loadPagesSpecificationByJsFile(dataJsFilePath);
 
@@ -19,6 +19,8 @@ async function main() {
     for (const page of Object.values(pages)) {
         await unsubscribeImageFile(page, workDirPath);
     }
+
+    afterWork(pages, workDirPath);
 }
 
 async function unsubscribeImageFile(page, workDirPath) {
@@ -73,8 +75,6 @@ async function unsubscribeImageFile(page, workDirPath) {
 
     const unscrambledImagePath = path.join(workDirPath, zp(page.page_number, 4) + '.jpg');
     image.toFile(unscrambledImagePath);
-
-    // fs.rmSync(scrambledImagePath);
 }
 
 function loadPagesSpecificationByJsFile(jsFilePath) {
@@ -90,6 +90,14 @@ async function downloadAllScrambledImages(pages, workDirPath) {
     for (const page of Object.values(pages)) {
         const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
         await httpsDownload(page.url, dlPath);
+    }
+}
+
+function afterWork(pages, workDirPath) {
+    console.log('最後まですっと来てしまったりするの？');
+    for (const page of Object.values(pages)) {
+        const scrambledImagePath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
+        fs.rmSync(scrambledImagePath);
     }
 }
 
