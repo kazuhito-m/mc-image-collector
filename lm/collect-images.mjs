@@ -107,7 +107,6 @@ function numberJpegFilePathOf(value, dirPath) {
 async function collectNaturalImages(imgs, workDirPath) {
     for (const key in Object.keys(imgs)) {
         const img = imgs[key];
-        console.log('keyの値は ' + key + 'で、型は ' + typeof key);
         const dlPath = numberJpegFilePathOf(key, workDirPath);
         await httpsDownload(img.url, dlPath);
     }
