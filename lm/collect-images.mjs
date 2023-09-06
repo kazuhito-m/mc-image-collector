@@ -12,8 +12,18 @@ async function main() {
     const dataJsFilePath = process.argv[2];
     const workDirPath = path.dirname(dataJsFilePath);
 
-    const pages = loadPagesSpecificationByJsFile(dataJsFilePath);
+    const imageDifinitionJs = fs.readFileSync(dataJsFilePath, 'utf8');
+    const geval = eval; // FIXME おまじないすぎる…なぜ動くか知った上で使いたい。 https://stackoverflow.com/questions/52160557/fail-to-create-variable-using-eval-in-node-js-es6
+    geval(imageDifinitionJs);   // define valiable: portal_pages, imgs
 
+    if (!isEmptyAssociativeArray(portal_pages))
+        await collectScrambledImages(portal_pages, workDirPath);
+
+    if (!isEmptyAssociativeArray(imgs))
+        await collectNaturalImages(imgs, workDirPath);
+}
+
+async function collectScrambledImages(pages, workDirPath) {
     await downloadAllScrambledImages(pages, workDirPath);
 
     for (const page of Object.values(pages)) {
@@ -74,15 +84,6 @@ async function unsubscribeImageFile(page, workDirPath) {
     image.toFile(unscrambledImagePathOf(page, workDirPath));
 }
 
-function loadPagesSpecificationByJsFile(jsFilePath) {
-    const imageDifinitionJs = fs.readFileSync(jsFilePath, 'utf8');
-
-    const geval = eval; // FIXME おまじないすぎる…なぜ動くか知った上で使いたい。 https://stackoverflow.com/questions/52160557/fail-to-create-variable-using-eval-in-node-js-es6
-    geval(imageDifinitionJs);
-
-    return portal_pages;
-}
-
 async function downloadAllScrambledImages(pages, workDirPath) {
     for (const page of Object.values(pages)) {
         const dlPath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
@@ -96,7 +97,20 @@ function scrambledFileNameOf(num) {
 }
 
 function unscrambledImagePathOf(page, workDirPath) {
-    return path.join(workDirPath, zp(page.page_number, 4) + '.jpg');
+    return numberJpegFilePathOf(page.page_number, workDirPath)
+}
+
+function numberJpegFilePathOf(value, dirPath) {
+    return path.join(dirPath, zp(value, 4) + '.jpg');
+}
+
+async function collectNaturalImages(imgs, workDirPath) {
+    for (const key in Object.keys(imgs)) {
+        const img = imgs[key];
+        console.log('keyの値は ' + key + 'で、型は ' + typeof key);
+        const dlPath = numberJpegFilePathOf(key, workDirPath);
+        await httpsDownload(img.url, dlPath);
+    }
 }
 
 function zp(value, length) {
@@ -133,6 +147,11 @@ function numOf3tToDecimalChar(numbOf35BaseOneChar) {
 
 function isNumeric(value) {
     return !isNaN(parseFloat(value)) && isFinite(value);
+}
+
+function isEmptyAssociativeArray(value) {
+    return !value || !Object.keys(value).length;
+
 }
 
 await main();
