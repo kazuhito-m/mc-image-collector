@@ -19,5 +19,5 @@
 1. `Chrome` で当該サイトのビューアを閲覧
 2. `Chrome` でそのページをHTMLとして保存(`完全` や `.mhtml` ではなく、`HTMLのみ(.html)`)
 3. コンソールを開き、このリポジトリ直下からスクリプトを実行
-    - `run_dl_and_unscramble.sh xxx.html`
+    - `./run_dl_and_unscramble.sh xxx.html`
 4. *.htmlファイルの名前と同じフォルダが作成され、そこに画像が溜まる(上記例では `./xxx` フォルダ)
