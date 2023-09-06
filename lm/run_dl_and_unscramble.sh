@@ -48,7 +48,7 @@ npm run all ${WORK_DIR}/${SCRAMBLE_IMAGE_DATA_PATH}
 # TODO デバッグ、後で戻す。一時的にコメントアウト。
 # rm -rf ${WORK_DIR}
 
-final_dir_path=$(echo ${html_file} | sed 's/.html$//g')
+final_dir_path=$(echo ${html_file} | sed 's/\.[Hh][Tt][Mm]l*$//g')
 # mv ${RESULT_DIR} ${final_dir_path}
 
 echo "取得並びに変換処理が終了しました。 ${final_dir_path} を確認して下さい。"
