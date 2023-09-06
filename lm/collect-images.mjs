@@ -10,17 +10,18 @@ async function main() {
         return;
     }
     const dataJsFilePath = process.argv[2];
-    const workDirPath = path.dirname(dataJsFilePath);
+    const workDirPath = dataJsFilePath.substring(0, dataJsFilePath.length - path.basename(dataJsFilePath).length);
 
     const pages = loadPagesSpecificationByJsFile(dataJsFilePath);
 
     await downloadAllScrambledImages(pages, workDirPath);
 
+    for (const page of Object.values(pages)) {
+        await unsubscribeImageFile(page, workDirPath);
+    }
+}
 
-    // TODO Debug;試しに一つだけ、ファイルは決め打ち。
-    const imagePath = path.join('.', workDirPath, 'scrambled_0001.jpg');
-    const page = pages['0'];
-
+async function unsubscribeImageFile(page, workDirPath) {
     const meta = page.metadata;
 
     const tileAriaRight = meta.iw - (meta.iw % meta.bwd);
@@ -29,13 +30,14 @@ async function main() {
     const tileWidth = tileAriaRight / meta.hc;
     const tileHeight = tileAriaBottom / meta.vc;
 
-    const image = sharp(imagePath);
+    const scrambledImagePath = path.join(workDirPath, scrambledFileNameOf(page.page_number));
+    const image = sharp(scrambledImagePath);
 
     const tileImages = [];
-    for (let y = 0; y < meta.vc; y++) {
-        const top = tileHeight * y;
-        for (let x = 0; x < meta.hc; x++) {
-            const left = tileWidth * x;
+    for (let row = 0; row < meta.vc; row++) {
+        const top = tileHeight * row;
+        for (let col = 0; col < meta.hc; col++) {
+            const left = tileWidth * col;
             const tileImage = image.clone()
                 .extract({
                     top: top,
@@ -60,15 +62,19 @@ async function main() {
 
         const pasteStatus = {
             input: tileImages[pos],
-            top: col * tileWidth,
-            left: row * tileHeight,
+            top: tileWidth * row,
+            left: tileHeight * col,
             blend: 'over'
         };
         pasteImages.push(pasteStatus);
     }
 
     image.composite(pasteImages);
-    image.toFile('./work/cut_test.jpg');
+
+    const unscrambledImagePath = path.join(workDirPath, zp(page.page_number, 4) + '.jpg');
+    image.toFile(unscrambledImagePath);
+
+    // fs.rmSync(scrambledImagePath);
 }
 
 function loadPagesSpecificationByJsFile(jsFilePath) {
@@ -110,13 +116,11 @@ async function httpsDownload(url, localPath) {
 }
 
 function numOf35ToDecimal(numbOf35BaseText) {
-    let decimal = 0;
     return numbOf35BaseText.split('')
         .reverse()
         .map(oneChar => numOf3tToDecimalChar(oneChar))
         .map((num, i) => (35 ** i) * num)
         .reduce((total, value) => total + value);
-
 }
 
 function numOf3tToDecimalChar(numbOf35BaseOneChar) {
