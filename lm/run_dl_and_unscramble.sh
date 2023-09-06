@@ -42,14 +42,13 @@ cat ${html_file} \
   | sed -z 's/;\n\n/;\n/g' \
   > ${WORK_DIR}/${SCRAMBLE_IMAGE_DATA_PATH}
 
-## TODO HTMLの情報からDL,スクランブル解除、調整等。
 npm run all ${WORK_DIR}/${SCRAMBLE_IMAGE_DATA_PATH}
 
-# TODO デバッグ、後で戻す。一時的にコメントアウト。
-# rm -rf ${WORK_DIR}
+mv ${WORK_DIR}/????.jpg ${RESULT_DIR} 
+rm -rf ${WORK_DIR}
 
 final_dir_path=$(echo ${html_file} | sed 's/\.[Hh][Tt][Mm]l*$//g')
-# mv ${RESULT_DIR} ${final_dir_path}
+mv ${RESULT_DIR} ${final_dir_path}
 
 echo "取得並びに変換処理が終了しました。 ${final_dir_path} を確認して下さい。"
 exit 0
