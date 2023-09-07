@@ -12,10 +12,16 @@
   - https://sharp.pixelplumbing.com/
   - https://qiita.com/t_o_d/items/cbd2dd557ef7bbe78470
   - https://blog.kozakana.net/2019/04/sharp-image-processing/
-- eval周り(node.jsでの仕様周り)
-  - cf. CallExpression セマンティック: https://tc39.es/ecma262/#sec-function-calls-runtime-semantics-evaluation
-  - cf. Eval の実装: https://tc39.es/ecma262/#sec-performeval
-  - eval('foo') はレキシカルスコープ、globalThis.eval('foo') はグローバルスコープ 
 - Node.js(JavaScript)基本形
   - https://kb.upken.jp/nodejs-eval2.html
   
+### eval()まわりの話
+
+ES の eval は、関数呼び出し構文において、プロパティ参照ではなく参照名が 'eval' の場合のみ現在のスコープで実行される (Direct eval) 。
+
+それ以外の方法で eval 関数を起動した場合はグローバルスコープで実行される。
+
+- cf. CallExpression セマンティック: https://tc39.es/ecma262/#sec-function-calls-runtime-semantics-evaluation
+- cf. Eval の実装: https://tc39.es/ecma262/#sec-performeval
+
+eval('foo') はレキシカルスコープ、globalThis.eval('foo') はグローバルスコープ。 
