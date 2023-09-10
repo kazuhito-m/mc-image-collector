@@ -10,6 +10,12 @@
 ## 一つの作品から「話」を取る方法
 
 
+## スクランブル解除方法
+
+- 画像を8で割った余りを切ったものを「タイル領域」にする
+- 4x4=16分割する
+- 右に展開していたものを縦に展開して並び替えたら終了
+
 
 ## 制約的な観点でのいろいろ
 
@@ -22,3 +28,5 @@
   - https://www.agent-grow.com/self20percent/2019/03/11/typescript-paths-work-careful/
 - Node.jsでDIの話
   - https://dev.classmethod.jp/articles/trying-out-di-dependency-inversion-and-di-container-in-node-js/
+  - https://www.cyokodog.net/blog/inversify-js/
+  - https://kotamat.com/post/inversify/
