@@ -1,5 +1,6 @@
-const defaultSettings = require('../conf/settings.json');
+import { injectable } from 'inversify';
 
+@injectable()
 export class CollectCommand {
     public execute(): number {
 
