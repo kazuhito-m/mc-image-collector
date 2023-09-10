@@ -13,7 +13,7 @@ export class DIContainerFactory {
 
         c.bind<Settings>(Symbol.for('Settings')).toConstantValue(settings);
 
-        c.bind<CollectCommand>(Symbol.for('CollectCommand')).toSelf();
+        c.bind<CollectCommand>(Symbol.for('CollectCommand')).to(CollectCommand);
 
         c.bind<SettingRepository>(Symbol.for('SettingRepository')).to(SettingDatasource);
         c.bind<NamedWorkRepository>(Symbol.for('NamedWorkRepository')).to(NamedWorkTransfer);

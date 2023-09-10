@@ -1,4 +1,5 @@
 import { Command } from 'commander';
+import "reflect-metadata";
 import * as figlet from 'figlet';
 import { CollectCommand } from './presentation/command/collect-command';
 import { SettingDatasource } from './infrastracture/datasource/config/setting-datasource';
@@ -26,7 +27,7 @@ if (!options.h && !options.v) {
             exitCode = 1;
         } else {
             const diContainer = new DIContainerFactory().create(settings);
-            const command = diContainer.get<CollectCommand>(CollectCommand);
+            const command = diContainer.get<CollectCommand>(Symbol.for('CollectCommand'));
 
             exitCode = command.execute();
         }

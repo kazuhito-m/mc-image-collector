@@ -1,13 +1,17 @@
 {
     "compilerOptions": {
+        "composite": true,
         "rootDir": "src",
         "outDir": "dist",
+        "declaration": true,
+        "noImplicitAny": true,
         "strict": true,
         "target": "es6",
         "lib": [
             "es6"
         ],
         "types": [
+            "node",
             "reflect-metadata"
         ],
         "module": "commonjs",
@@ -15,6 +19,10 @@
         "esModuleInterop": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
-    }
+        "emitDecoratorMetadata": true,
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
