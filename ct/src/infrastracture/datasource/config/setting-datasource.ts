@@ -1,8 +1,8 @@
-import { SettingRepository } from "@/domain/model/config/setting-repository";
-import { Settings } from "@/domain/model/config/settings";
 import fs from 'fs';
+import { SettingRepository } from '../../../domain/model/config/setting-repository';
+import { Settings } from '../../../domain/model/config/settings';
 
-const defaultSettings = require('../../../conf/settings.json');
+const defaultSettings = require('../../../../conf/settings.json');
 
 export class SettingDatasource implements SettingRepository {
     public loadOf(filePath?: string): Settings | undefined {
