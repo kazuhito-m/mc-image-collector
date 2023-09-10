@@ -6,6 +6,7 @@ import { NamedWorkRepository } from './domain/model/ct/named-work/named-work-rep
 import { NamedWorkTransfer } from './infrastracture/http-transfer/ct/named-work/named-work-transfer';
 import { Settings } from './domain/model/config/settings';
 import { CollectCommand } from './presentation/command/collect-command';
+import { SiteMetadataDownlaodService } from './application/service/ct/site-metadata-download-service';
 
 export class DIContainerFactory {
     public create(settings: Settings): Container {
@@ -13,10 +14,12 @@ export class DIContainerFactory {
 
         c.bind<Settings>(Symbol.for('Settings')).toConstantValue(settings);
 
-        c.bind<CollectCommand>(Symbol.for('CollectCommand')).to(CollectCommand);
-
         c.bind<SettingRepository>(Symbol.for('SettingRepository')).to(SettingDatasource);
         c.bind<NamedWorkRepository>(Symbol.for('NamedWorkRepository')).to(NamedWorkTransfer);
+
+        c.bind<SiteMetadataDownlaodService>(Symbol.for('SiteMetadataDownlaodService')).to(SiteMetadataDownlaodService);
+
+        c.bind<CollectCommand>(Symbol.for('CollectCommand')).to(CollectCommand);
 
         return c;
     }
