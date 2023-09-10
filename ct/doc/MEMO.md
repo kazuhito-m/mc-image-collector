@@ -18,3 +18,7 @@
 
 - TypeScriptでコンソールアプリを作成する方法
   - https://blog.logrocket.com/building-typescript-cli-node-js-commander/
+- TypeScript単体では `@` を解決してくれない、という話
+  - https://www.agent-grow.com/self20percent/2019/03/11/typescript-paths-work-careful/
+- Node.jsでDIの話
+  - https://dev.classmethod.jp/articles/trying-out-di-dependency-inversion-and-di-container-in-node-js/
