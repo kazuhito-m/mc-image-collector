@@ -5,11 +5,14 @@ import { SiteMetadataDownlaodService } from '../../application/service/ct/site-m
 export class CollectCommand {
     constructor(
         @inject(Symbol.for('SiteMetadataDownlaodService'))
-        siteMetadataDownlaodService: SiteMetadataDownlaodService
+        private readonly siteMetadataDownlaodService: SiteMetadataDownlaodService
     ) { }
 
     public execute(): number {
-        console.log('コマンドの中身が実行されました。 TODO 実装。');
+        const siteMetaData = this.siteMetadataDownlaodService.loadSiteMetadata();
+
+        console.log(JSON.stringify(siteMetaData));
+
         return 0;
     }
 }
