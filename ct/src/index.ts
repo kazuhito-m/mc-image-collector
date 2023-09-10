@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import * as figlet from 'figlet';
-import { CollectCommand } from './collect-command';
+import { CollectCommand } from '@/collect-command';
+import { SettingDatasource } from '@/infrastracture/datasource/config/setting-datasource';
 
 console.log(figlet.textSync("CT Image Collector"));
 
@@ -17,8 +18,15 @@ const options = program.opts();
 let exitCode = 0;
 if (!options.h && !options.v) {
     try {
-        const main = new CollectCommand();
-        exitCode = main.execute(options.settings);
+        const settingRepository = new SettingDatasource();
+        const settings = settingRepository.loadOf(options.settings);
+        if (!settings) {
+            console.log('指定された設定ファイルをよめませんでした。path:' + options.settings);
+            exitCode = 1;
+        } else {
+            const main = new CollectCommand();
+            exitCode = main.execute();
+        }
     } catch (error) {
         console.error("予期せぬエラーが発生しました。", error);
         exitCode = 127;
