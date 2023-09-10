@@ -133,3 +133,4 @@ dist
 
 # output dirs
 /dist/
+/downloaded/
