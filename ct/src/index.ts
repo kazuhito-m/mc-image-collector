@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import * as figlet from 'figlet';
-import { CollectCommand } from './collect-command';
+import { CollectCommand } from './presentation/command/collect-command';
 import { SettingDatasource } from './infrastracture/datasource/config/setting-datasource';
 
 console.log(figlet.textSync("CT Image Collector"));
