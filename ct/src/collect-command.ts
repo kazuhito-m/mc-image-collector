@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Settings } from "./domain/config/settings";
+import { Settings } from "./domain/model/config/settings";
 
 const defaultSettings = require('../conf/settings.json');
 
