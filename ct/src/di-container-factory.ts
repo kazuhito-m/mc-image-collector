@@ -11,12 +11,12 @@ export class DIContainerFactory {
     public create(settings: Settings): Container {
         const c = new Container();
 
-        c.bind<Settings>('Settings').toConstantValue(settings);
+        c.bind<Settings>(Symbol.for('Settings')).toConstantValue(settings);
 
-        c.bind<CollectCommand>('CollectCommand').toSelf();
+        c.bind<CollectCommand>(Symbol.for('CollectCommand')).toSelf();
 
-        c.bind<SettingRepository>('SettingRepository').to(SettingDatasource);
-        c.bind<NamedWorkRepository>('NamedWorkRepository').to(NamedWorkTransfer);
+        c.bind<SettingRepository>(Symbol.for('SettingRepository')).to(SettingDatasource);
+        c.bind<NamedWorkRepository>(Symbol.for('NamedWorkRepository')).to(NamedWorkTransfer);
 
         return c;
     }

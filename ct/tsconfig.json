@@ -4,9 +4,17 @@
         "outDir": "dist",
         "strict": true,
         "target": "es6",
+        "lib": [
+            "es6"
+        ],
+        "types": [
+            "reflect-metadata"
+        ],
         "module": "commonjs",
         "sourceMap": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     }
 }
