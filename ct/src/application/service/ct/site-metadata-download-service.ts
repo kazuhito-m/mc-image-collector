@@ -10,6 +10,7 @@ export class SiteMetadataDownlaodService {
     ) { }
 
     public loadSiteMetadata(): SiteMetadata {
-        return { namedWorks: { "test": {} } };
+        const namedWorks = this.namedWorkRepository.allOf();
+        return { namedWorks: namedWorks };
     }
 }
