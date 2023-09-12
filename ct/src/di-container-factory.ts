@@ -5,6 +5,7 @@ import { SettingDatasource } from './infrastracture/datasource/config/setting-da
 import { NamedWorkRepository } from './domain/model/ct/named-work/named-work-repository';
 import { NamedWorkTransfer } from './infrastracture/http-transfer/ct/named-work/named-work-transfer';
 import { Settings } from './domain/model/config/settings';
+import { HttpRequester } from './infrastracture/http-transfer/ct/named-work/http-requester';
 import { CollectCommand } from './presentation/command/collect-command';
 import { SiteMetadataDownlaodService } from './application/service/ct/site-metadata-download-service';
 
@@ -13,6 +14,8 @@ export class DIContainerFactory {
         const c = new Container();
 
         c.bind<Settings>(Symbol.for('Settings')).toConstantValue(settings);
+
+        c.bind<HttpRequester>(Symbol.for('HttpRequester')).to(HttpRequester);
 
         c.bind<SettingRepository>(Symbol.for('SettingRepository')).to(SettingDatasource);
         c.bind<NamedWorkRepository>(Symbol.for('NamedWorkRepository')).to(NamedWorkTransfer);

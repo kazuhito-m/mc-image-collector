@@ -8,7 +8,7 @@ export class CollectCommand {
         private readonly siteMetadataDownlaodService: SiteMetadataDownlaodService
     ) { }
 
-    public execute(): number {
+    public async execute(): Promise<number> {
         const siteMetaData = this.siteMetadataDownlaodService.loadSiteMetadata();
 
         console.log(JSON.stringify(siteMetaData));

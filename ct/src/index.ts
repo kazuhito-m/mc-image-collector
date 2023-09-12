@@ -4,6 +4,7 @@ import * as figlet from 'figlet';
 import { CollectCommand } from './presentation/command/collect-command';
 import { SettingDatasource } from './infrastracture/datasource/config/setting-datasource';
 import { DIContainerFactory } from './di-container-factory';
+import { resolve } from 'path';
 
 console.log(figlet.textSync("CT Image Collector"));
 
@@ -29,7 +30,8 @@ if (!options.h && !options.v) {
             const diContainer = new DIContainerFactory().create(settings);
             const command = diContainer.get<CollectCommand>(Symbol.for('CollectCommand'));
 
-            exitCode = command.execute();
+            // exitCode = await command.execute();
+            new Promise(resolve => { command.execute().then(code => resolve(code)) });
         }
     } catch (error) {
         console.error("予期せぬエラーが発生しました。", error);

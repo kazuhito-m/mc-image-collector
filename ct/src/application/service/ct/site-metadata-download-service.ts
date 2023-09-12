@@ -9,8 +9,8 @@ export class SiteMetadataDownlaodService {
         private namedWorkRepository: NamedWorkRepository
     ) { }
 
-    public loadSiteMetadata(): SiteMetadata {
-        const namedWorks = this.namedWorkRepository.allOf();
+    public async loadSiteMetadata(): Promise<SiteMetadata> {
+        const namedWorks = await this.namedWorkRepository.allOf();
         return { namedWorks: namedWorks };
     }
 }
