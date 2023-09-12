@@ -9,7 +9,7 @@ export class CollectCommand {
     ) { }
 
     public async execute(): Promise<number> {
-        const siteMetaData = this.siteMetadataDownlaodService.loadSiteMetadata();
+        const siteMetaData = await this.siteMetadataDownlaodService.loadSiteMetadata();
 
         console.log(JSON.stringify(siteMetaData));
 
